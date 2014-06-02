@@ -1,0 +1,23 @@
+{% extends "frontend.html" %}
+{% block title %} formulario de Ticket {% endblock %}
+{% block article %}
+
+<div class="container">
+ <div class="row">
+   <div class="col-lg-3 col-lg-offset-3">			
+		
+		<form class="form-inline" method="post" action="">
+			<h2 class="form-signin-heading">Registro de ticket</h2>
+			{% csrf_token %}
+		    {{ form_ticket }}		    
+		    <button class="btn btn-large btn-primary btn-block" type="submit">Aceptar</button>
+		    
+		</form>
+
+	   </div> <!-- /container -->
+	 </div>       
+	</div>   
+ <hr>
+
+
+{% endblock %}

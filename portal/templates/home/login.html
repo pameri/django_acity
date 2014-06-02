@@ -1,0 +1,49 @@
+{% extends "frontend.html" %}
+{% block title %} Login {% endblock %}
+{% block article %}
+{% load url from future %}
+<div class="container">
+	
+	
+	
+  	<div class="col-xs-6 col-sm-4">
+
+      <form method="POST" class="form-signin" action="{% url 'django.contrib.auth.views.login' %}">
+      	<a href="index.html"><img id="logo-footer" src="/media/images/acity.jpg" class="pull-center" alt="" /></a>
+        <h2 class="form-signin-heading">Login</h2>
+        		{% csrf_token %}
+				{{ mensaje   }}
+				{{ form.as_p }}   
+        <!-- <input type="text" class="form-control" placeholder="Email address" autofocus>
+        <input type="password" class="form-control" placeholder="Password">
+        <label class="checkbox">
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>--> 
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Aceptar</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+      </div>
+<div class="col-xs-6 col-sm-4"></div>
+  <!-- 
+<div class="row">
+   <div class="col-lg-3 col-lg-offset-3">			
+	<form method="POST" class="form-signin" action="{% url 'django.contrib.auth.views.login' %}">
+      	<a href="index.html"><img id="logo-footer" src="/media/images/acity.jpg" class="pull-center" alt="" /></a>
+        <hr>
+        <h2 class="form-signin-heading">Login</h2>
+        		{% csrf_token %}
+				{{ mensaje   }}
+				{{ form.as_p }}        
+        <button class="btn btn-large btn-primary btn-block" type="submit">Aceptar</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+	</div> 
+ </div>       
+--> 
+
+ 
+</div>  <!-- /container --> 
+ <hr>
+
+
+{% endblock %}

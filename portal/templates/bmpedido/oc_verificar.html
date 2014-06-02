@@ -1,0 +1,261 @@
+{% extends "frontend.html" %}
+
+{% block js %}    
+    
+   <script type="text/javascript">
+      
+   	var nombre_boton_detalle = ".detalle";   	
+   	$(document).on('ready',function(){
+        $(nombre_boton_detalle).on('click',function(e){
+			   e.preventDefault();
+			   var Pid = $(this).attr('id');
+               var name = $(this).data('name');
+               var nameobse = $(this).data('name');
+               var contador = 0 ;
+               $('#modal_idPedidodet').val(Pid);
+               $('#modal_namedet').text(name); 
+               $.getJSON("/ws/ocdetalles/"+name+"/",function(data){
+               		$('#modal_obse').text(data[0].oc_obse);  
+               		var table='<div class="table-responsive"><table class="table table-bordered" ><thead><tr class="success" ><th>O/C</th><th>Descripción del Producto</th><th>Cantidad</th><th>UM</th><th>Precio</th><th>Subtotal</th><th>F.Entrega</th></tr></thead>';       	
+               		$.each( data, function( index, item){
+               		contador = 1;	
+               		table+='<tbody><tr ><td>'+item.item_codcomer+'</td><td>'+item.item_nomb+'</td><td align="right">'+item.ocdet_cant+'</td><td >'+item.unidad+'</td><td align="right">'+item.precio+'</td><td align="right">'+item.subtotal+'</td><td >'+item.fentrega+'</td></tr></tbody>';
+			   		});                 
+               table+='</table></div>';
+               if (contador ==1){               	
+               	$(".modal-body #DetalleItemOC").html( table );	
+               }                    
+               else{
+               	$(".modal-body ").html( table );
+               }
+               
+               });
+       });
+	}); 	
+    </script>
+     
+{% endblock %}   
+{% block title %} Verificar O/C del BM {% endblock %}
+{% block article %}
+
+<!--IniciaModal-->
+ <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 	 <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    <h3 id="myModalLabel">Verificar O/C del BM</h3>
+    </div>
+    <div class="modal-body">
+    <p>¿Realmente desea verificar la O/C: <span id="modal_name"></span>?</p>
+    </div>
+    <div class="modal-footer">
+    	    	
+        <form method="post" id="frmVerificarOC">
+            {% csrf_token %}
+            <input type="hidden" id="modal_idoc" name="pedido_id">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Verificar</button>
+        </form>
+    </div>
+     </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<!--EndModal-->
+
+
+<!--IniciaModal-->
+ <div id="myModaldet" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ 	 <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 id="myModalLabel">Detalle de la O/C: <span id="modal_namedet"></span> </h4>
+    </div>
+    <div class="modal-body">
+    
+    	<h4>Observación del O/C:</h4> <span id="modal_obse"></span>    	
+    	
+       	<div id="DetalleItemOC"> </div>    	
+    </div>
+        
+    <div class="modal-footer"> 	      
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Cerrar</button>
+    </div>
+     </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+<!--EndModal-->
+
+
+
+<div class="container">
+	<!--<div class="row">
+		<div class="well sidebar-nav">
+            <ul class="nav nav-list" id="ProductosNuevos">
+              <li class="nav-header">Nuevos Productos</li>              
+            </ul>
+         </div><!--/.well
+	</div>-->
+	      
+  <div class="row">
+        <!--<div class="col-lg-2">
+        	<img class="img-thumbnail" src="/media/images/req_software.png">         
+        </div>-->
+        <!-- /.col-lg-4  url:"/ws/productos/", -->        
+	   	<div class="col-lg-10">	          
+	          <h4>Ordenes de Compra por Verificar!!</h4>	                
+	     </div><!-- /.col-lg-4 -->
+       <!--  <div class="col-lg-2">
+          <div class="list-group">
+  		  	<a href="#" class="list-group-item active">Nuevo Pedido </a>
+  		  	<a href="#" class="list-group-item">Tus Pedidos </a>   
+  			</div>
+           <ul class="nav nav-list" id="ProductosNuevos">
+              <li class="nav-header">Nuevos Productos</li>              
+           </ul>
+        </div><!-- /.col-lg-4 -->       
+    
+  </div>
+  <div class="row">
+     <div class="col-lg-12">  
+	     		<div class="row">
+	     			
+				    
+				    <div class="col-lg-12"> 
+				    	 <h5> Página {{ pedidos.number }} de {{ pedidos.paginator.num_pages }}</h5>
+				    </div>	
+				</div>
+								
+		     	{% if pedidos %}	
+		     	<div class="table-responsive">				
+		     	 <table class="table table-bordered" id="tabla_pedidos">
+				      	<thead>
+				                <tr>
+				                  
+				                  <th>Verificar</th>
+				                  <th>Ver</th>
+				                  <th>Número O/C</th>
+				                  <th>Almacen</th>	
+				                  <th>User Emite</th>				                   	                  
+				                  <th>F.Emisión</th>				                 
+				                  <th>Ruc</th>	  
+				                  <th>Proveedor</th>
+				                  <!--<th>Usuario</th></td>-->
+				                  <th>Total a Pagar</th>
+				                  <th>Moneda</th>                  
+				                  	               
+				                  <!--<th>Observación</th>	-->		                 
+				                 						                
+				                  
+				                </tr>
+				        </thead>
+				
+				 		{% for p in pedidos %}
+					 		<tbody>
+					 			{% if p.oc_mone == 'S' %}
+					 				<tr class="warning" id="tr{{p.oc_nume}}" >					 			
+					 			{% else %}	
+					 				<tr class="success" id="tr{{p.oc_nume}}" >
+					 										             
+						        {% endif %}		
+						        
+						        		
+									{% if user.is_authenticated  %}
+									
+										<!--and user.is_staff<td><a class="btn" href="/edit/producto/{{p.id}}/"><i class="icon-pencil"></i>  Editar </a></td>-->
+											
+												<td><a href="#myModal" type="button" class="btn btn-primary verificaroc" data-toggle="modal" id="{{p.oc_nume}}" 
+													data-name="{{p.oc_nume}}">
+													<span class="glyphicon glyphicon-ok"></span>
+													</a>
+												</td>
+												
+											
+								   {% endif %}	
+										<td>
+								   			<a href="#myModaldet" type="button" class="btn btn-primary detalle" data-toggle="modal" id="{{p.oc_nume}}" 
+												data-name="{{p.oc_nume}}"  >
+												<span class="glyphicon glyphicon-list"></span>
+												
+											</a>
+										</td>		
+												
+																          
+						          <td>{{ p.oc_nume }}</td>
+						          <td>{{ p.almacen }}</td>	
+						          <td>{{ p.useremite }}</td>
+						          <!--<td>{{ p.orpe_fech|date:'d-m-Y H:i'}}</td>-->
+						          <td>{{ p.oc_fech|date:'d-m-Y'}}</td>
+						         
+						           <td>{{ p.prov_codi }}</td>
+						           <td>{{ p.prov_nomb }}</td>
+						           <td align="right">{{ p.total }}</td>			          
+						          
+						          <td>						          	
+						          	{% if p.oc_mone == 'S' %}						          	 	
+						          	 	Soles						          
+						          	 {% else %}
+						          	 	Dolares
+						          	 {% endif %}						          	 
+						          </td>			          
+						          <!--<td>{{ p.orpe_obse |truncatewords:20 }}</td>-->
+								   					          
+						        </tr>			          
+							</tbody>
+						{% endfor %}
+				    </table>
+				   </div>
+				    
+				    <div class="row">
+	     			<div class="col-lg-12">      	
+					{% if pedidos %}				    
+					    <ul class="pagination">
+							<li><a href="/ocverificar/page/1"> << </a></li>
+						{% if pedidos.has_previous %}
+							<li><a href="/ocverificar/page/{{pedidos.previous_page_number }}/"> Prev </a></li>
+						{% else %}
+							<li><a href="#"> Prev </a></li>
+						{% endif %}
+						{% if pedidos.has_next %}
+							<li><a href="/ocverificar/page/{{pedidos.next_page_number }}/"> Next </a></li>
+						{% else %}
+							<li><a href="#"> Next </a></li>
+						{% endif %}
+							<li><a href="/ocverificar/page/{{pedidos.paginator.num_pages }} "> >> </a><li>
+						</ul>					
+					{% endif %}			
+				    </div>
+				    
+				    
+				</div>
+				
+			    {% else %}
+					<h4>No existen Orden de Compra por Verificar :( </h4>
+				{% endif %}			
+	     	</div>	     	
+     	</div> 
+     	
+     
+     <br>
+	 <div class="row">
+	     <div class="col-lg-12"> 
+	     <h4>Leyenda:</h4>     	
+	     	<a  type="button" class="btn btn-primary aprobar" data-toggle="modal" 
+				>
+				<span class="glyphicon glyphicon-ok"></span>
+				</a>  Verificar Orden Compra BM	
+			<br>     
+	     	
+			<br>
+			<a type="button" class="btn btn-primary detalle" data-toggle="tooltip" title="Ver Detalle del Pedido" >
+													<span class="glyphicon glyphicon-list"></span>												
+			</a>  Ver Detalle del O/C BM											
+		</div>	
+	 </div> 
+      <br>
+ </div> 
+ 
+{% endblock %}
+
+{% block aside %}
+{% endblock %}

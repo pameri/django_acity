@@ -1,0 +1,49 @@
+{% extends "frontend.html" %}
+{% block js %}
+    	
+	<script type="text/javascript" src="/my_admin/jsi18n/"></script>
+	<script type="text/javascript" src="/media/admin/js/core.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="/media/admin/css/forms.css"/>
+	<link rel="stylesheet" type="text/css" href="/media/admin/css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="/media/admin/css/global.css"/>
+	<link rel="stylesheet" type="text/css" href="/media/admin/css/widgets.css"/>
+
+	 
+	{{form.media}}
+	
+{% endblock %}
+{% block title %} Agregar Tipo de Cambio {% endblock %}
+{% block article %} 
+			<div class="container">			
+			  	<div class="row">
+				{% if info_enviado %}
+					El Tipo de Cambio fue registrado satisfactoriamente.
+					<br>
+					<a href="/tipocambio/page/1/"><h2>Regresar a la lista de Tipo de Cambio</h2> </a>
+					<br>		
+				{% else %}		
+	       			<div class="col-lg-2">
+	        			<img class="img-thumbnail" src="/media/images/tica.jpg">         
+		        	</div>	                
+			   		<div class="col-lg-10">
+			        	  <h2>Registro de Tipo de Cambio $</h2>			        	  
+			          		<form action="." method="POST" enctype="multipart/form-data">				
+							{% csrf_token %}
+							{{ form.as_p }}
+								<button type="submit" class="btn btn-small btn-primary">Guardar</button>
+								<button type="reset" class="btn btn-small btn-primary">Limpiar</button>
+							</form>	
+							<br>							                
+			     	</div>
+	  				<br>
+					<a href="/tipocambio/page/1/"><h2>Regresar a la lista de Tipo de Cambio</h2> </a>
+				{% endif %}
+				</div>
+	 		</div>
+	 		<br>
+{% endblock %}
+{% block aside %}
+{% endblock %}
+
+

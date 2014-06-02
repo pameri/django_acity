@@ -1,0 +1,162 @@
+{% extends "frontend.html" %}
+{% block title %} Gestion de Tickets {% endblock %}
+{% block article %}
+<div class="container">
+  <div class="row">
+        <div class="col-lg-2">
+          <img class="img-thumbnail" src="/media/images/helpdesk.jpg">      
+         
+        </div><!-- /.col-lg-4 -->
+       
+   		<div class="col-lg-8">
+          
+          <h2>Gestión de Ticket</h2>
+          <p>Herramienta de HELPESK que nos permite reportar fallas o solicitar servicio para el area de soporte a Usuarios</p>
+          
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-2">
+          <div class="list-group">
+  		  	<a href="#" class="list-group-item active">Nuevo Ticket </a>
+  		  	<a href="#" class="list-group-item">Tus Ticket  		  </a>   
+  			</div>
+          
+        </div><!-- /.col-lg-4 -->
+
+  </div>
+  <div class="row">
+     <div class="col-lg-12"> 
+     	<ul class="nav nav-tabs">
+		  <li class="active"><a href="#opcion1" data-toggle="tab">Opcion 1</a></li>
+		  <li><a href="#opcion2" data-toggle="tab" >Opcion 2</a></li>
+		 
+		</ul>
+     	<div class="tab-content">
+	     	<div class="tab-pane active" id = "opcion1">
+	     		<div class="row">
+	     			<div class="col-lg-6"> 
+		     			<h3>Ticket Activos</h3> 
+		     		</div>
+		     		<div class="col-lg-3">      	
+					{% if tickets %}				    
+					    <ul class="pagination">
+							<li><a href="/tickets/page/1"> << </a></li>
+						{% if tickets.has_previous %}
+							<li><a href="/tickets/page/{{tickets.previous_page_number }}/"> Prev </a></li>
+						{% else %}
+							<li><a href="#"> Prev </a></li>
+						{% endif %}
+						{% if tickets.has_next %}
+							<li><a href="/tickets/page/{{tickets.next_page_number }}/"> Next </a></li>
+						{% else %}
+							<li><a href="#"> Next </a></li>
+						{% endif %}
+							<li><a href="/tickets/page/{{tickets.paginator.num_pages }} "> >> </a><li>
+						</ul>						
+						
+					{% endif %}			
+				    </div>
+				    <div class="col-lg-3"> 
+				    	 <h3> Página {{ tickets.number }} de {{ tickets.paginator.num_pages }}</h3>
+				    </div>	
+				</div>
+		     	{% if tickets %}
+			
+		      <table class="table table-bordered">
+				      	<thead>
+				                <tr>
+				                  <th>Nro</th>
+				                  <th>Fecha</th>	                 
+				                  <th>Usuario</th>
+				                  <th>Asunto</th>	               
+				                  <th>Descripción</th>
+				                  <th>Estado</th>
+				                  <th>Ver</th>
+				                
+				                </tr>
+				        </thead>
+				
+				 		{% for p in tickets %}
+					 		<tbody>
+						        <tr>
+						          
+						          <td>{{ p.id }}</td>
+						          <td>{{ p.fticket }}</td>
+						          <td>{{ p.iduser }}</td>
+						          <td>{{ p.tasunto }}</td>			          
+						          <td>{{ p.tdescripcion |truncatewords:30 }}</td>
+						          <td>
+						          	 {% if p.testado == 'E' %}
+						          	 	
+						          	 	<button type="button" class="btn btn-danger" disabled="disabled" >Emitido</button>
+						          	 {% else %}
+						          	 	<button type="button" class="btn btn-danger" disabled="disabled" >Finalizado</button>
+						          	 {% endif %}
+						          	</td>
+						          
+						          <td><a class="btn" href="#"><i class="icon-search"></i>Ver</a></td>
+						        </tr>			          
+							</tbody>
+						{% endfor %}
+				    </table>
+			    {% else %}
+					<h2>No existen tickets  :( </h2>
+				{% endif %}
+				
+				
+				
+		
+		
+	     	</div>
+	     	<div class="tab-pane" id = "opcion2">
+		     	<h3>Tickets cerrados</h3>
+		     	
+		     	
+		     	{% if listas %}
+		
+				      <table class="table table-bordered">
+				      	<thead>
+				                <tr>
+				                  <th>Nro</th>
+				                  <th>Fecha</th>	                 
+				                  <th>Usuario</th>
+				                  <th>Asunto</th>	               
+				                  <th>Descripción</th>
+				                  <th>Ver</th>
+				                
+				                </tr>
+				        </thead>
+				
+				 		{% for p in listas %}
+					 		<tbody>
+						        <tr>
+						          
+						          <td>{{ p.id }}</td>
+						          <td>{{ p.fticket }}</td>
+						          <td>{{ p.iduser }}</td>
+						          <td>{{ p.tasunto }}</td>			          
+						          <td>{{ p.tdescripcion |truncatewords:30 }}</td>
+						          <td><a class="btn" href="#"><i class="icon-search"></i>Ver</a></td>
+						        </tr>			          
+							</tbody>
+						{% endfor %}
+				    </table>
+			    {% else %}
+					<h2>No existen listas  :( </h2>
+				{% endif %}
+	     	</div>  	
+     	</div>
+          
+		
+				
+
+  </div> 
+  </div> 
+ </div> 
+{% endblock %}
+
+{% block aside %}
+		
+	
+    	
+
+{% endblock %}

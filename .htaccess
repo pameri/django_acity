@@ -1,0 +1,4 @@
+AddHandler fcgid-script. Fcgi
+En RewriteEngine
+RewriteCond% {} REQUEST_FILENAME!-F
+RewriteRule ^ (. *) $ Django.fcgi / $ 1 [QSA, L]

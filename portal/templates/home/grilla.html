@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %} centinela {% endblock %}
+{% block content %} 
+	<p>Esta es mi primera página en Django</p>
+
+	<br>
+	{% if centinelas %}
+	    <table class="table table-condensed">    	
+	    	<thead>
+	                <tr>
+	                 <th>ID</th>	
+	                  <th>Usuario</th>	                 
+	                  <th>Fecha de Transaccion</th>
+	                   <th>Ocurrencia</th>               
+	                
+	                </tr>
+	        </thead>
+	    {% for p in centinelas %}
+	     	<tbody>
+	     		<tr class="success">
+	     			<td>{{ p.id }}</td>
+					<td>{{ p.usu_clave }}</td>
+					<td>{{ p.cent_fecha|date:"F j, Y" }}</td>					
+					<td>{{ p.cent_obser |truncatewords:"50" }}</td>		
+									
+				</tr>
+			</tbody>
+		{% endfor %}
+	    </table>
+		
+	{% else %}
+		<h2>No existen registros :( </h2>
+	{% endif %}
+{% endblock %}
+
+ 
+
+ 
+</head>
+ 
+<body style="background: #121212">
+ 
+<div id="Encabezado" style="padding:0px; background:#ccc">
+<div style="float:left;width: 100%; background:#9bd252; border :0px solid #ccc; height:55px">
+<div >
+<img src="images/logoLogin.png" alt="">
+</div>
+<div style="color:#1a1a1a; padding:20px; text-align: center; font-family: sans-serif; font-weight: bold" >
+dahicotux.wordpress.com
+</div>
+</div>
+ 
+<div style="background:#1c1c1c;">
+ 
+</div>
+</div>
+ 
+<div id="LeftPane" >
+<table id="west-grid"></table>
+</div> <!-- #LeftPane -->
+ 
+<div id="RightPane" ><!-- Tabs pane -->
+ 
+<div id="switcher"></div>
+ 

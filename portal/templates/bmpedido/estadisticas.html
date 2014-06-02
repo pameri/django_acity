@@ -1,0 +1,42 @@
+{% extends "frontend.html" %}
+
+{% block js %}    
+    
+<script type="text/javascript" src="http://www.google.com/jsapi?key={{ GOOGLE_API_KEY }}"></script>
+<script type="text/javascript">
+
+	google.load("visualization", "1", {packages:["corechart"]});
+	
+    google.setOnLoadCallback(function() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Día');
+        data.addColumn('number', 'Pedidos nuevos');
+       data.addRows({{ users_stats|length }});
+
+        {% for s in users_stats %}  
+            data.setValue({{ forloop.counter0 }}, 0, '{{ s.0|date:"d M" }}');
+            data.setValue({{ forloop.counter0 }}, 1, {{ s.1 }});
+        {% endfor %}
+      	 var chart = new google.visualization.LineChart(document.getElementById('pedidos_14_dias'));
+        chart.draw(data, {width: 620, height: 200, legend:'none'});
+    });
+ 
+</script>
+{% endblock %}   
+
+
+{% block title %} Aprobacion de O/C del BM {% endblock %}
+{% block article %}
+	<div class="container">
+		<div class="row">
+		<div class="col-lg-12">    	
+		 	<h1>Nuevos Usuarios en las últimos 2 semanas</h1>
+		    <div id="pedidos_14_dias"></div>
+	    </div>
+	    </div>
+    </div>
+    <br>
+{% endblock %}
+
+{% block aside %}
+{% endblock %}

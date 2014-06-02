@@ -1,0 +1,50 @@
+{% extends 'frontend.html' %}
+{% block title %} Inicio - Bienvenidos {% endblock %}
+
+
+
+	
+	{% block article %}
+	
+	 	
+		{% if tickets %} 
+			<div class="span12">
+				{% for ticket in tickets %}
+			    <h2>{{ ticket.asunto }}</h2>
+			    <p>{{ ticket.glosa}}</p>
+			    	<div>
+			        <span class="badge badge-success">Enviado 2012-08-02 20:47:04</span>
+			        <div class="pull-right">	  
+			            <span class="label">Percy Ameri</span>
+			        </div>
+			    </div> 
+		    	<hr>
+		    	
+		    	{% endfor %}
+		 {% else %}
+		 		<h2>No existen productos activos a la venta :( </h2>
+		 {% endif %}
+		</div>
+		
+		<div class="pagination">
+			  <ul>
+			    <li><a href="#">Prev</a></li>
+			    <li><a href="#">1</a></li>
+			    <li><a href="#">2</a></li>
+			    <li><a href="#">3</a></li>
+			    <li><a href="#">4</a></li>
+			    <li><a href="#">5</a></li>
+			    <li><a href="#">Next</a></li>
+			  </ul>
+		</div>
+				
+		
+		
+		
+
+
+
+
+	{% endblock %}
+	
+	{% block aside %} {% endblock %}

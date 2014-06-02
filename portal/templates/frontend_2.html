@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %} FrondEnd {% endblock %}
+{% block content %}
+	
+	<header>
+		<div class="navbar navbar-inverse nav">
+	     <div class="navbar-inner">       	
+	        <div class="container">
+	            <!-- brand class is from bootstrap.css  -->
+	            <a class="brand" href="{% url "vista_principal" %}">PORTAL </a>
+	            <div class="nav-collapse">          	
+		            
+	                <ul class="nav">
+	                    <li class="active"><a href="{% url "vista_principal" %}"><i class="icon-home icon-white"></i>Home</a></li>
+	                    <li><a href="#">Centinela</a></li>            
+	                    <li class="dropdown">
+	                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Ventas <b class="caret"></b></a>
+	                        <ul class="dropdown-menu">
+	                            <li><a href="#">Facturación</a></li>
+	                            <li><a href="#">Reporte de Ventas 2013</a></li>
+	                            <li class="divider"></li>
+	                            <li class="nav-header">Header</li>
+	                            <li><a href="#">Separated action</a></li>
+	                        </ul>                        
+	                    </li>
+	                </ul>  
+	                      	    
+				    
+	                <form class="navbar-search pull-left">
+	                    <input type="text" class="search-query" placeholder="Search">
+	                </form>
+	               
+	               	               
+	               <div class="nav-collapse collapse">
+		             
+		              <div class="pull-right">
+		                <ul class="nav pull-right">
+		                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		                    	Bienvenido , 
+		                    	{% if user.is_authenticated %} 
+		                    		 {{ user.username }}
+		                    	{% else %}
+		                    		User
+		                    	{% endif %}	
+		                    	<b class="caret"></b></a>
+		                        <ul class="dropdown-menu">
+		                            <li><a href="/user/preferences"><i class="icon-cog"></i> Preferences</a></li>
+		                            <li><a href="/help/support"><i class="icon-envelope"></i> Contact Support</a></li>
+		                            <li class="divider"></li>
+		                            {% if user.is_authenticated %}
+		                            	<li><a href="{% url "vista_logout" %}"><i class="icon-off"></i> Logout</a></li>
+		                            {% else %}
+		                            	<li><a href="{% url "vista_login" %}"><i class="icon-off"></i> Login</a></li>
+		                            {% endif %}
+		                        </ul>
+		                    </li>
+		                </ul>
+		              </div>
+		            </div>
+            
+            
+	            </div><!-- /.nav-collapse -->
+	        </div>
+	    </div><!-- /navbar-inner -->
+	</div><!-- /navbar -->
+	</header>
+	
+	
+		<!--=== Purchase Block ===-->
+<div class="row-fluid purchase margin-bottom-30">
+    <div class="container">
+		<div class="span9">
+            <span>Unify is a clean and fully responsive incredible Template.</span>
+            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi  vehicula sem ut volutpat. Ut non libero magna fusce condimentum eleifend enim a feugiat.</p>
+        </div>
+        <a href="https://wrapbootstrap.com/theme/unify-responsive-website-template-WB0412697" class="btn-buy hover-effect">Purchase Now</a>
+    </div>
+</div><!--/row-fluid-->
+<!-- End Purchase Block -->
+	
+
+
+		<div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+        	
+		    <div class="sidebar-nav">
+				<div class="well" style="width:200px; padding: 8px 0;">
+					<ul class="nav nav-list"> 
+					  <li class="nav-header">Admin Menu</li>        
+					  <li><a href="#"><i class="icon-home"></i> Lista de Tickets</a></li>
+			          <li><a href="#"><i class="icon-envelope"></i> Messages <span class="badge badge-info">4</span></a></li>
+			          <li><a href="#"><i class="icon-comment"></i> Comments <span class="badge badge-info">10</span></a></li>
+					  <li class="active"><a href="#"><i class="icon-user"></i> Members</a></li>
+			          <li class="divider"></li>
+					  <li><a href="#"><i class="icon-comment"></i> Settings</a></li>
+					  <li><a href="#"><i class="icon-share"></i> Logout</a></li>
+					</ul>
+				</div>
+			</div>
+        	
+         <!-- <div class="hero-unit">-->
+           <!-- {% block menu %}  {% endblock %}-->
+          <!--</div>-->
+          
+             
+          
+          
+          
+          
+        </div><!--/span-->
+        <div class="span8">
+          
+            {% block article %}  {% endblock %}
+          
+        </div><!--/span-->
+        <div class="span2">
+          
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list" id="ProductosNuevos">
+                  {% block aside %}  {% endblock %} 
+            </ul>
+          </div><!--/.well -->
+           <img src="/media/images/helpdesk.jpg"/>
+        </div><!--/span-->
+      </div><!--/row-->
+      
+	
+	
+	
+
+
+
+		
+{% endblock %}
